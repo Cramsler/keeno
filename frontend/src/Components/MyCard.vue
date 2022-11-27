@@ -1,24 +1,24 @@
 <template>
-  <router-link :to="{name: getRouteName(media.content_type), params: {id: media.id}}" class="card" target="_blank">
-    <img :src="posterLink" alt="film-poster" class="card-image"/>
+  <router-link :to="{name: getRouteName(props.media.content_type), params: {id: props.media.id}}" class="card">
+    <img :src="posterLink" alt="film-poster" class="card-image" />
     <div class="card-title__container">
-      <span>{{media.ru_title}}</span>
+      <span>{{ props.media.ru_title }}</span>
     </div>
   </router-link>
 </template>
 
 <script lang="ts" setup>
-import {match} from "ts-pattern";
-import {ContentTypeEnum} from "@/Types/ContentTypeEnum";
-import {RouterNames} from "@/router/RouterNames";
-import {getPoster} from "@/Helpers/PosterHelper";
-import {computedAsync} from "@vueuse/core";
+import { match } from "ts-pattern";
+import { ContentTypeEnum } from "@/Types/ContentTypeEnum";
+import { RouterNames } from "@/router/RouterNames";
+import { getPoster } from "@/Helpers/PosterHelper";
+import { computedAsync } from "@vueuse/core";
 
-const { media } = defineProps<{
-  media: {}
-}>()
+const props = defineProps<{
+  media: {};
+}>();
 
-const posterLink = computedAsync(async () => await getPoster(media));
+const posterLink = computedAsync(async () => await getPoster(props.media));
 
 function getRouteName(type: string) {
   return match(type)
@@ -27,7 +27,6 @@ function getRouteName(type: string) {
       // .with("anime_tv_series", () => RouterNames.WATCH_ANIME_SERIES)
       .otherwise(() => RouterNames.WATCH_SERIES);
 }
-
 </script>
 
 <style scoped>

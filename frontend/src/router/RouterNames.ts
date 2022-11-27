@@ -7,5 +7,6 @@ export enum RouterNames {
     SERIES = "series",
     SHOW = "show",
     TV_SHOW = "tv-show",
-    ANIME_SHOW = "anime-show"
+    ANIME_SHOW = "anime-show",
+    SEARCH = "search"
 }

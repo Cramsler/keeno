@@ -1,40 +1,46 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import {RouterNames} from "@/router/RouterNames";
+import { createRouter, createWebHistory } from "vue-router";
+import { RouterNames } from "@/router/RouterNames";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: "/",
       name: RouterNames.HOME,
-      component: () => import('@/Pages/Movies/HomePage.vue')
+      component: () => import("@/Pages/Movies/HomePage.vue"),
     },
     {
-      path: '/watch/:id',
+      path: "/watch/:id",
       name: RouterNames.WATCH_MOVIE,
-      component: () => import('@/Pages/Movies/WatchFilm.vue')
+      component: () => import("@/Pages/Movies/WatchFilm.vue"),
     },
     {
-      path: '/series',
+      path: "/series",
       name: RouterNames.SERIES,
-      component: () => import('../Pages/Series/SeriesPage.vue')
+      component: () => import("../Pages/Series/SeriesPage.vue"),
     },
     {
-      path: '/series/watch/:id',
+      path: "/series/watch/:id",
       name: RouterNames.WATCH_SERIES,
-      component: () => import('../Pages/Series/WatchSeries.vue')
+      component: () => import("../Pages/Series/WatchSeries.vue"),
     },
     {
-      path: '/anime',
+      path: "/anime",
       name: RouterNames.ANIME,
-      component: () => import('../Pages/AnimePage.vue'),
+      component: () => import("../Pages/AnimePage.vue"),
     },
     {
-      path: '/tv-show',
+      path: "/tv-show",
       name: RouterNames.SHOW,
-      component: () => import('../Pages/ShowPage.vue')
-    }
-  ]
-})
+      component: () => import("../Pages/ShowPage.vue"),
+    },
+    {
+      path: "/search-result",
+      name: RouterNames.SEARCH,
+      component: () => import("../Pages/SearchPage.vue"),
+      props: (route) => ({ query: route.query.q }),
+    },
+  ],
+});
 
-export default router
+export default router;

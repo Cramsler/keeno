@@ -11,7 +11,7 @@
             <div v-if="filmInfo.countries.length" class="info-item-block">
               <div class="info-item">Страна</div>
               <div class="flex flex-wrap gap-2">
-                <div v-for="country in filmInfo.countries" class="info-item-value">{{ country.country }}</div>
+                <div v-for="(country, index) in filmInfo.countries" :key="index" class="info-item-value">{{ country.country }}</div>
               </div>
             </div>
             <div v-if="filmInfo.genres.length" class="info-item-block">

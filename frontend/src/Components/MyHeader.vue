@@ -1,13 +1,13 @@
 <template>
   <div class="header">
     <div class="w-1/3">
-      <router-link :to="{name: RouterNames.HOME}">
-        <img src="../assets/icons/logo.svg" alt="logo" width="150">
+      <router-link :to="{ name: RouterNames.HOME }">
+        <img src="../assets/icons/logo.svg" alt="logo" width="150" />
       </router-link>
     </div>
 
     <ul class="header-category__list">
-      <router-link  v-for="(category, index) in categoryList" :key="index" :to="{name: category.link}">
+      <router-link v-for="(category, index) in categoryList" :key="index" :to="{ name: category.link }">
         <li class="header-category__item">
           {{ category.title }}
         </li>
@@ -16,20 +16,19 @@
 
     <div class="w-1/3 flex justify-end relative overflow-hidden">
       <div class="header-search">
-        <input type="text" class="header-search__input" v-model="searchInput">
-        <img src="../assets/icons/search.svg" alt="search" width="20">
-        <button class="search-button" @click="goSearch">Найти</button>
+        <input type="text" class="header-search__input" v-model="searchInput" />
+        <img src="../assets/icons/search.svg" alt="search" width="20" />
+        <router-link class="search-button" :to="{ name: RouterNames.SEARCH, query: {q: searchInput} }">
+          Найти
+        </router-link>
       </div>
     </div>
-
   </div>
 </template>
 
 <script lang="ts" setup>
-import {computed, ref} from "vue";
-import {RouterNames} from "@/router/RouterNames";
-
-const emit = defineEmits(["search"]);
+import { computed, ref } from "vue";
+import { RouterNames } from "@/router/RouterNames";
 
 const searchInput = ref("");
 
@@ -38,17 +37,11 @@ const categoryList = computed(() => {
     { title: "Фильмы", link: RouterNames.HOME },
     { title: "Сериалы", link: RouterNames.SERIES },
     { title: "Аниме", link: RouterNames.ANIME },
-    { title: "ТВ-шоу", link: RouterNames.SHOW }
-  ]
+    { title: "ТВ-шоу", link: RouterNames.SHOW },
+  ];
 });
 
 const searchButtonPosition = computed(() => searchInput.value ? "0" : "-15rem");
-
-function goSearch() {
-  emit('search', searchInput.value);
-  searchInput.value = "";
-}
-
 </script>
 
 <style scoped>
@@ -60,8 +53,7 @@ function goSearch() {
 }
 
 .header-search {
-  @apply w-max flex flex-row items-center justify-between rounded-full py-2 px-3;
-  background: #18181AFF;
+  @apply w-max flex flex-row items-center justify-between rounded-full py-2 px-3 bg-[#18181aff];
 }
 
 .header-search__input {

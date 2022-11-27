@@ -1,41 +1,31 @@
 <template>
   <div class="flex flex-col items-center">
-    <MyHeader @search="search" />
-    <div v-if="!foundContent" class="w-full main-content">
+    <MyHeader ref="header" />
+    <div class="w-full main-content">
       <RouterView />
     </div>
-
-    <div v-else class="w-full p-8 main-content">
-      <div class="flex flex-wrap gap-20">
-        <MyCard v-for="(film, index) in foundContent" :key="index" :media="film" />
-      </div>
-    </div>
   </div>
+  <GoUpButton :hidden="headerVisibility" @click="goUp" />
 </template>
 
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterView } from "vue-router";
 import MyHeader from "@/Components/MyHeader.vue";
-import {ref} from "vue";
-import MyCard from "@/Components/MyCard.vue";
-import {searchMedia} from "@/Services/MoviesService";
-import {RouterNames} from "@/router/RouterNames";
-import {match} from "ts-pattern";
-import {ContentTypeEnum} from "@/Types/ContentTypeEnum";
+import { ref } from "vue";
+import GoUpButton from "@/Components/MyGoUpButton.vue";
+import { useElementVisibility } from "@vueuse/core";
 
-const foundContent = ref();
+const header = ref(null);
 
-async function search(searchString: string) {
-  const res = await searchMedia(searchString);
-  foundContent.value = res.data;
+const headerVisibility = useElementVisibility(header);
+
+function goUp() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 </script>
 
 <style scoped>
 .main-content {
   @apply flex items-center flex-col;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(5.6px);
-  -webkit-backdrop-filter: blur(5.6px);
 }
 </style>

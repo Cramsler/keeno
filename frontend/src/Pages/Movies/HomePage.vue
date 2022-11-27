@@ -5,6 +5,7 @@
         <video
           :src="slide.video"
           :poster="slide.img"
+          loop
           autoplay
           preload
           muted
@@ -31,7 +32,7 @@
       />
     </div>
 
-    <ButtonMore @downloadMore="downloadMore" />
+    <ButtonMore @downloadMore="downloadMore" :download="download" />
   </div>
 </template>
 
@@ -43,6 +44,7 @@ import MyCard from "@/Components/MyCard.vue";
 import ButtonMore from "@/Components/MyButtonMore.vue";
 
 const player = ref(null);
+const download = ref(false);
 
 const slides = [
   {
@@ -52,8 +54,8 @@ const slides = [
     video: "src/assets/videos/spider-man.mp4",
   },
   {
-    title: "Second",
-    description: "",
+    title: "Джон Уик",
+    description: "Джон Уик — бывший наемный убийца — ведет размеренную жизнь, когда преступник крадет его любимый Mustang 1969 года и попутно убивает собаку Дейзи, единственное живое напоминание об умершей жене. Жажда мести пробуждает в нем, казалось, утерянную хватку…",
     img: "https://avatars.mds.yandex.net/get-ott/224348/2a00000162251f4534d9ae8fa869a2b5ebc0/orig",
     video: "src/assets/videos/john-week.mp4",
   },
@@ -70,10 +72,10 @@ const allFilms = computedAsync(async () => {
 }, []);
 
 async function downloadMore() {
+  download.value = true;
   const { data } = await getAllFilms((allFilms.value.current_page += 1));
-  data.data.map((film: any) => {
-    allFilms.value.data.push(film);
-  });
+  data.data.forEach((film: any) => allFilms.value.data.push(film));
+  download.value = false;
 }
 </script>
 
